@@ -1,0 +1,128 @@
+body {
+    background-color: #e5ddd5;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  input, textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-size: 14px;
+    resize: none;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #075e54;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+  }
+  
+  .chat-wrapper {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .chat-header {
+    background-color: #075e54;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .chat-header .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .chat-info h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .chat-info p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  
+  .chat-container {
+    height: 500px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-wrapper {
+    display: flex;
+    margin: 10px 0;
+    align-items: flex-end;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s ease-in-out forwards;
+  }
+  
+  .message-wrapper.user {
+    flex-direction: row-reverse;
+  }
+  
+  .message-wrapper .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 8px;
+  }
+  
+  .message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 15px;
+    background-color: #dcf8c6;
+  }
+  
+  .message.bot {
+    background-color: #fff;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .record-controls {
+    text-align: center;
+    margin: 10px;
+  }
+  

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fake Chat Generator</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="input-wrapper" id="inputSection">
+    <input type="text" id="userName" placeholder="Enter Your Name (e.g., Mia)" />
+    <input type="text" id="botName" placeholder="Enter Bot's Name (e.g., Jay)" />
+    <textarea id="conversationInput" placeholder="Paste your conversation here... (e.g., M: Hello\nJ: What's up?)"></textarea>
+    <button id="generateBtn">Generate Chat</button>
+  </div>
+
+  <div class="chat-wrapper" id="chatSection" style="display: none;">
+    <div class="chat-header">
+      <img src="images/bot.png" class="avatar" />
+      <div class="chat-info">
+        <h2 id="chatTitle">Chat</h2>
+        <p>Online</p>
+      </div>
+    </div>
+    <div class="chat-container" id="chat"></div>
+    <div class="record-controls">
+      <button id="downloadBtn">Download Chat Video</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
