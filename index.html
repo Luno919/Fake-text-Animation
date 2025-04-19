@@ -2,29 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fake Chat Generator</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Custom Chat</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="input-wrapper" id="inputSection">
-    <input type="text" id="userName" placeholder="Enter Your Name (e.g., Mia)" />
-    <input type="text" id="botName" placeholder="Enter Bot's Name (e.g., Jay)" />
-    <textarea id="conversationInput" placeholder="Paste your conversation here... (e.g., M: Hello\nJ: What's up?)"></textarea>
+  <div class="input-form">
+    <input type="text" id="botName" placeholder="Bot Name" />
+    <input type="text" id="userName" placeholder="User Name" />
+    <textarea id="conversationInput" placeholder="Enter your chat script here..."></textarea>
+    
+    <div class="upload-section">
+      <label>Upload Bot Avatar: <input type="file" id="botAvatarInput" accept="image/*" /></label>
+      <label>Upload User Avatar: <input type="file" id="userAvatarInput" accept="image/*" /></label>
+      <label>Upload Chat Images: <input type="file" id="chatImagesInput" multiple accept="image/*" /></label>
+    </div>
+    
     <button id="generateBtn">Generate Chat</button>
   </div>
 
-  <div class="chat-wrapper" id="chatSection" style="display: none;">
+  <div class="chat-wrapper">
     <div class="chat-header">
-      <img src="images/bot.png" class="avatar" />
+      <img src="" class="avatar" id="botAvatar" />
       <div class="chat-info">
-        <h2 id="chatTitle">Chat</h2>
+        <h2 id="botHeader">Bot</h2>
         <p>Online</p>
       </div>
     </div>
+
     <div class="chat-container" id="chat"></div>
-    <div class="record-controls">
-      <button id="downloadBtn">Download Chat Video</button>
-    </div>
+  </div>
+
+  <div class="download-btn-container">
+    <button id="downloadBtn">Download Chat Video</button>
   </div>
 
   <script src="script.js"></script>

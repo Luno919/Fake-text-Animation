@@ -1,60 +1,77 @@
-const inputSection = document.getElementById("inputSection");
-const chatSection = document.getElementById("chatSection");
 const chat = document.getElementById("chat");
 const generateBtn = document.getElementById("generateBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 
-generateBtn.onclick = async () => {
-  const inputText = document.getElementById("conversationInput").value.trim();
-  const userName = document.getElementById("userName").value.trim();
-  const botName = document.getElementById("botName").value.trim();
-  const chatTitle = document.getElementById("chatTitle");
+let botImgURL = "images/bot.png";
+let userImgURL = "images/user.png";
+let chatImages = [];
 
-  if (!inputText || !userName || !botName) {
-    alert("Please fill all fields!");
-    return;
+document.getElementById("botAvatarInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    botImgURL = URL.createObjectURL(file);
+    document.getElementById("botAvatar").src = botImgURL;
   }
+});
 
+document.getElementById("userAvatarInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) userImgURL = URL.createObjectURL(file);
+});
+
+document.getElementById("chatImagesInput").addEventListener("change", (e) => {
+  chatImages = Array.from(e.target.files).map(file => URL.createObjectURL(file));
+});
+
+generateBtn.onclick = async () => {
+  const botName = document.getElementById("botName").value || "Bot";
+  const userName = document.getElementById("userName").value || "You";
+  const conversation = document.getElementById("conversationInput").value.trim();
+  const lines = conversation.split("\n").filter(line => line.trim() !== "");
+
+  document.getElementById("botHeader").textContent = botName;
   chat.innerHTML = "";
-  chatTitle.textContent = botName;
+  let imgIndex = 0;
 
-  const lines = inputText.split("\n");
-
-  inputSection.style.display = "none";
-  chatSection.style.display = "flex";
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const match = line.match(/^([A-Za-z]+):\s*(.+)$/);
-    if (!match) continue;
-
-    const name = match[1];
-    const message = match[2];
-    const sender = name.toLowerCase() === userName.toLowerCase() ? "user" : "bot";
+  for (let line of lines) {
+    const sender = line.startsWith(userName + ":") ? "user" : "bot";
+    const content = line.substring(line.indexOf(":") + 1).trim();
 
     const wrapper = document.createElement("div");
     wrapper.className = `message-wrapper ${sender}`;
-    wrapper.style.animationDelay = `${i * 0.5}s`;
 
     const avatar = document.createElement("img");
-    avatar.src = sender === "user" ? "images/user.png" : "images/bot.png";
+    avatar.src = sender === "user" ? userImgURL : botImgURL;
     avatar.className = "avatar";
 
     const bubble = document.createElement("div");
     bubble.className = `message ${sender}`;
-    bubble.textContent = message;
+
+    if (content.toLowerCase().includes("[image]") && chatImages[imgIndex]) {
+      const img = document.createElement("img");
+      img.src = chatImages[imgIndex++];
+      img.className = "media";
+      bubble.appendChild(img);
+    } else {
+      bubble.textContent = content;
+    }
 
     wrapper.appendChild(avatar);
     wrapper.appendChild(bubble);
     chat.appendChild(wrapper);
 
-    // Delay between messages
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 1200));
     chat.scrollTop = chat.scrollHeight;
+    function scrollToBottom() {
+      chat.scrollTop = chat.scrollHeight;
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 100));
+    scrollToBottom();
+
   }
 };
 
-// Download chat as video
 downloadBtn.onclick = () => {
   const chatWrapper = document.querySelector(".chat-wrapper");
   const stream = chatWrapper.captureStream(30);
@@ -68,13 +85,14 @@ downloadBtn.onclick = () => {
   recorder.onstop = () => {
     const blob = new Blob(chunks, { type: "video/webm" });
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
-    a.download = "chat_recording.webm";
+    a.download = "chat_video.webm";
     a.click();
   };
 
   recorder.start();
-  setTimeout(() => recorder.stop(), 4000); // Adjust recording length if needed
+
+  // Stop recording after chat finishes displaying + 3s
+  setTimeout(() => recorder.stop(), (chat.children.length * 1200) + 3000);
 };
